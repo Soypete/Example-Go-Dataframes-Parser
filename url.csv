@@ -1,0 +1,5 @@
+URL,Header_Key,Header
+https://api.si.edu/saam/v1/books,Accept,application/vnd.api+json
+https://api.usa.gov/crime/fbi/sapi/api/agencies,,
+https://api.whitehouse.gov/v1/petitions.json,,
+https://api.commerce.gov/api/blogs,Accept,application/hal+json
