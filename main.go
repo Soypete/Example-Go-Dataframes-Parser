@@ -12,18 +12,15 @@ import (
 	"github.com/gota/dataframe"
 )
 
-// JSONMap is a map string interface for querried data
-type JSONMap map[string]interface{}
-
 var (
-	// Key the api key needed to make requests to government supported APIs.
+	// Key the ai key needed to make requests to government supported APIs.
 	Key = os.Getenv("API_KEY")
 	// Maps are a slice of all maps
 	Maps []map[string]interface{}
 )
 
 // GetData querries all gov apis for data.
-func GetData(client http.Client, url, headerKey, header string) (df dataframe.DataFrame, err error) {
+func GetData(client http.Client, url, headerKey, header string) (m map[string]interface{}, err error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Println("unable to create request on url: ", url, err)
@@ -37,29 +34,26 @@ func GetData(client http.Client, url, headerKey, header string) (df dataframe.Da
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Println("unable to perform request on url:", url, err)
-		return df, err
+		return m, err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
 		log.Println("unable to reach ", url, resp.Status)
-		return df, err
+		return m, err
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Println("unable to read body from ", url, err)
-		return df, err
+		return m, err
 	}
-	var m map[string]interface{}
 	err = json.Unmarshal(body, &m)
 	if err != nil {
 		log.Println("cannot Unmarshal, ", err)
-		return df, err
+		return m, err
 	}
-	Maps := append(Maps, m)
-	fmt.Println(len(m))
+	fmt.Println(m)
 
-	df = dataframe.LoadMaps(Maps)
-	return df, nil
+	return m, nil
 }
 
 func main() {
