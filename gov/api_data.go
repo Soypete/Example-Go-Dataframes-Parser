@@ -10,7 +10,7 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 
-	"github.com/gota/dataframe"
+	"github.com/kniren/gota/dataframe"
 )
 
 var (

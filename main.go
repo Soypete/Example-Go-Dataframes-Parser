@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/gota/dataframe"
+	"github.com/kniren/gota/dataframe"
 )
 
 func main() {
